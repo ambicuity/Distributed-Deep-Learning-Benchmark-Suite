@@ -20,9 +20,16 @@ app = typer.Typer(
 
 console = Console()
 
+# Create sub-apps for benchmark and report
+benchmark_app = typer.Typer(help="Run throughput/latency tests across GPU configs.")
+report_app = typer.Typer(help="Generate visual HTML/PDF performance reports.")
 
-@app.command()
-def benchmark(
+app.add_typer(benchmark_app, name="benchmark")
+app.add_typer(report_app, name="report")
+
+
+@benchmark_app.command("run")
+def benchmark_run(
     config: Path = typer.Option(
         ...,
         "--config",
@@ -177,8 +184,8 @@ def profile(
         raise typer.Exit(code=1)
 
 
-@app.command()
-def report(
+@report_app.command("generate")
+def report_generate(
     source: Path = typer.Option(
         "./results",
         "--source",
