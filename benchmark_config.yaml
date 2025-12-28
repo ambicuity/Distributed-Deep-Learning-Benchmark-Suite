@@ -1,0 +1,17 @@
+experiment_name: "resnet50_scaling_test"
+models: 
+  - "resnet50"
+  - "bert-large"
+batch_sizes: 
+  - 64
+  - 128
+  - 256
+gpu_counts: 
+  - 1
+  - 2
+  - 4
+  - 8
+profiling:
+  enabled: true
+  tool: "nsys"
+  trigger: "sync_stall_detection"
